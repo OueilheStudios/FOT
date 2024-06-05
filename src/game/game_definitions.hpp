@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -84,16 +84,22 @@ enum CyclopediaCharacterInfo_RecentKillStatus_t : uint8_t {
 	CYCLOPEDIA_CHARACTERINFO_RECENTKILLSTATUS_ARENA = 4
 };
 
-enum HighscoreCategories_t : uint8_t {
-	HIGHSCORE_CATEGORY_EXPERIENCE = 0,
-	HIGHSCORE_CATEGORY_FIST_FIGHTING,
-	HIGHSCORE_CATEGORY_CLUB_FIGHTING,
-	HIGHSCORE_CATEGORY_SWORD_FIGHTING,
-	HIGHSCORE_CATEGORY_AXE_FIGHTING,
-	HIGHSCORE_CATEGORY_DISTANCE_FIGHTING,
-	HIGHSCORE_CATEGORY_SHIELDING,
-	HIGHSCORE_CATEGORY_FISHING,
-	HIGHSCORE_CATEGORY_MAGIC_LEVEL
+enum class HighscoreCategories_t : uint8_t {
+	EXPERIENCE = 0,
+	FIST_FIGHTING = 1,
+	CLUB_FIGHTING = 2,
+	SWORD_FIGHTING = 3,
+	AXE_FIGHTING = 4,
+	DISTANCE_FIGHTING = 5,
+	SHIELDING = 6,
+	FISHING = 7,
+	MAGIC_LEVEL = 8,
+	LOYALTY = 9,
+	ACHIEVEMENTS = 10,
+	CHARMS = 11,
+	DROME = 12,
+	GOSHNAR = 13,
+	BOSS_POINTS = 14,
 };
 
 enum HighscoreType_t : uint8_t {

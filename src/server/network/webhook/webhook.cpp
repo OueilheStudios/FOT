@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -38,7 +38,7 @@ Webhook &Webhook::getInstance() {
 }
 
 void Webhook::run() {
-	threadPool.addLoad([this] { sendWebhook(); });
+	threadPool.detach_task([this] { sendWebhook(); });
 	g_dispatcher().scheduleEvent(
 		g_configManager().getNumber(DISCORD_WEBHOOK_DELAY_MS, __FUNCTION__), [this] { run(); }, "Webhook::run"
 	);

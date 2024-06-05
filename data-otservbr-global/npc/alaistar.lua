@@ -36,13 +36,14 @@ local itemsTable = {
 		{ itemName = "strong health potion", clientId = 236, buy = 115 },
 		{ itemName = "strong mana potion", clientId = 237, buy = 93 },
 		{ itemName = "supreme health potion", clientId = 23375, buy = 625 },
-		{ itemName = "ultimate health potion", clientId = 7643, buy = 438 },
-		{ itemName = "ultimate mana potion", clientId = 23373, buy = 379 },
+		{ itemName = "ultimate health potion", clientId = 7643, buy = 379 },
+		{ itemName = "ultimate mana potion", clientId = 23373, buy = 438 },
 		{ itemName = "ultimate spirit potion", clientId = 23374, buy = 438 },
 		{ itemName = "vial", clientId = 2874, sell = 5 },
 	},
 	["creature products"] = {
 		{ itemName = "cowbell", clientId = 21204, sell = 210 },
+		{ itemName = "execowtioner mask", clientId = 21201, sell = 240 },
 		{ itemName = "giant pacifier", clientId = 21199, sell = 170 },
 		{ itemName = "glob of glooth", clientId = 21182, sell = 125 },
 		{ itemName = "glooth injection tube", clientId = 21103, sell = 350 },
@@ -73,7 +74,7 @@ npcType.onBuyItem = function(npc, player, itemId, subType, amount, ignore, inBac
 end
 -- On sell npc shop message
 npcType.onSellItem = function(npc, player, itemId, subtype, amount, ignore, name, totalCost)
-	player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("Sold %ix %s for %i gold.", amount, name, totalCost))
+	player:sendTextMessage(MESSAGE_TRADE, string.format("Sold %ix %s for %i gold.", amount, name, totalCost))
 end
 -- On check npc shop message (look item)
 npcType.onCheckItem = function(npc, player, clientId, subType) end

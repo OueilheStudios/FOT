@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -29,6 +29,7 @@ enum class Reload_t : uint8_t {
 	RELOAD_TYPE_RAIDS,
 	RELOAD_TYPE_SCRIPTS,
 	RELOAD_TYPE_GROUPS,
+	RELOAD_TYPE_VOCATIONS,
 
 	// Every is last
 	RELOAD_TYPE_LAST
@@ -64,8 +65,8 @@ private:
 	bool reloadNpcs() const;
 	bool reloadRaids() const;
 	bool reloadScripts() const;
-	bool reloadTalkaction() const;
 	bool reloadGroups() const;
+	bool reloadVocations() const;
 };
 
 constexpr auto g_gameReload = GameReload::getInstance;

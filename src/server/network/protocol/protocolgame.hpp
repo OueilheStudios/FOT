@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -13,9 +13,12 @@
 #include "creatures/interactions/chat.hpp"
 #include "creatures/creature.hpp"
 #include "enums/forge_conversion.hpp"
+#include "creatures/players/cyclopedia/player_badge.hpp"
+#include "creatures/players/cyclopedia/player_title.hpp"
 
 class NetworkMessage;
 class Player;
+class VIPGroup;
 class Game;
 class House;
 class Container;
@@ -28,6 +31,9 @@ class TaskHuntingSlot;
 class TaskHuntingOption;
 
 struct ModalWindow;
+struct Achievement;
+struct Badge;
+struct Title;
 
 using ProtocolGame_ptr = std::shared_ptr<ProtocolGame>;
 
@@ -72,12 +78,6 @@ public:
 	}
 
 private:
-	// Helpers so we don't need to bind every time
-	template <typename Callable, typename... Args>
-	void addGameTask(Callable function, Args &&... args);
-	template <typename Callable, typename... Args>
-	void addGameTaskTimed(uint32_t delay, std::string_view context, Callable function, Args &&... args);
-
 	ProtocolGame_ptr getThis() {
 		return std::static_pointer_cast<ProtocolGame>(shared_from_this());
 	}
@@ -130,6 +130,8 @@ private:
 
 	void sendItemInspection(uint16_t itemId, uint8_t itemCount, std::shared_ptr<Item> item, bool cyclopedia);
 	void parseInspectionObject(NetworkMessage &msg);
+
+	void parseFriendSystemAction(NetworkMessage &msg);
 
 	void parseCyclopediaCharacterInfo(NetworkMessage &msg);
 
@@ -212,6 +214,7 @@ private:
 	void parseAddVip(NetworkMessage &msg);
 	void parseRemoveVip(NetworkMessage &msg);
 	void parseEditVip(NetworkMessage &msg);
+	void parseVipGroupActions(NetworkMessage &msg);
 
 	void parseRotateItem(NetworkMessage &msg);
 	void parseConfigureShowOffSocket(NetworkMessage &msg);
@@ -317,8 +320,8 @@ private:
 	void sendCyclopediaCharacterCombatStats();
 	void sendCyclopediaCharacterRecentDeaths(uint16_t page, uint16_t pages, const std::vector<RecentDeathEntry> &entries);
 	void sendCyclopediaCharacterRecentPvPKills(uint16_t page, uint16_t pages, const std::vector<RecentPvPKillEntry> &entries);
-	void sendCyclopediaCharacterAchievements();
-	void sendCyclopediaCharacterItemSummary();
+	void sendCyclopediaCharacterAchievements(uint16_t secretsUnlocked, std::vector<std::pair<Achievement, uint32_t>> achievementsUnlocked);
+	void sendCyclopediaCharacterItemSummary(const ItemsTierCountList &inventoryItems, const ItemsTierCountList &storeInboxItems, const StashItemList &supplyStashItems, const ItemsTierCountList &depotBoxItems, const ItemsTierCountList &inboxItems);
 	void sendCyclopediaCharacterOutfitsMounts();
 	void sendCyclopediaCharacterStoreSummary();
 	void sendCyclopediaCharacterInspection();
@@ -359,6 +362,7 @@ private:
 
 	void sendUpdatedVIPStatus(uint32_t guid, VipStatus_t newStatus);
 	void sendVIP(uint32_t guid, const std::string &name, const std::string &description, uint32_t icon, bool notify, VipStatus_t status);
+	void sendVIPGroups();
 
 	void sendPendingStateEntered();
 	void sendEnterWorld();
@@ -476,6 +480,7 @@ private:
 
 	friend class Player;
 	friend class PlayerWheel;
+	friend class PlayerVIP;
 
 	std::unordered_set<uint32_t> knownCreatureSet;
 	std::shared_ptr<Player> player = nullptr;

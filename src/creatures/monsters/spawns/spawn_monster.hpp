@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -29,7 +29,7 @@ struct spawnBlock_t {
 class SpawnMonster {
 public:
 	SpawnMonster(Position initPos, int32_t initRadius) :
-		centerPos(std::move(initPos)), radius(initRadius) { }
+		centerPos(initPos), radius(initRadius) { }
 	~SpawnMonster();
 
 	// non-copyable
@@ -71,9 +71,9 @@ private:
 	uint32_t checkSpawnMonsterEvent = 0;
 
 	static bool findPlayer(const Position &pos);
-	bool spawnMonster(uint32_t spawnMonsterId, spawnBlock_t &sb, const std::shared_ptr<MonsterType> monsterType, bool startup = false);
+	bool spawnMonster(uint32_t spawnMonsterId, spawnBlock_t &sb, std::shared_ptr<MonsterType> monsterType, bool startup = false);
 	void checkSpawnMonster();
-	void scheduleSpawn(uint32_t spawnMonsterId, spawnBlock_t &sb, const std::shared_ptr<MonsterType> monsterType, uint16_t interval, bool startup = false);
+	void scheduleSpawn(uint32_t spawnMonsterId, spawnBlock_t &sb, std::shared_ptr<MonsterType> monsterType, uint16_t interval, bool startup = false);
 };
 
 class SpawnsMonster {

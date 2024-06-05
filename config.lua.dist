@@ -52,7 +52,8 @@ cleanProtectionZones = false
 -- Connection Config
 -- NOTE: allowOldProtocol can allow login on 10x protocol. (11.00)
 -- NOTE: maxPlayers set to 0 means no limit
--- NOTE: MaxPacketsPerSeconds if you change you will be subject to bugs by WPE, keep the default value of 25
+-- NOTE: MaxPacketsPerSeconds if you change you will be subject to bugs by WPE, keep the default value of 25, 
+-- It's recommended to use a range like min 50 in this function, otherwise you will be disconnected after equipping two-handed distance weapons.
 ip = "127.0.0.1"
 allowOldProtocol = false
 bindOnlyGlobalAddress = false
@@ -79,6 +80,17 @@ packetCompressionLevel = 6
 freeDepotLimit = 2000
 premiumDepotLimit = 10000
 depotBoxes = 20
+
+-- Augments System (Get more info in: https://github.com/opentibiabr/canary/pull/2602)
+-- NOTE: the following values are for all weapons and equipments that have type of "increase damage", "powerful impact" and "strong impact".
+-- To customize the percentage of a particular item with these augment types, please add to the item "augments" section on items.xml as the example above.
+-- NOTE: The values represent percentage.
+-- NOTE: augmentIncreasedDamagePercent = value between 1 and 100 (damage percent to increase. ex: 5 = 5%, 50 = 50%)
+-- NOTE: augmentPowerfulImpactPercent = value between 1 and 100 (damage percent to increase. ex: 10 = 10%, 100 = 100%)
+-- NOTE: augmentStrongImpactPercent = value between 1 and 100 (damage percent to increase. ex: 7 = 7%, 70 = 70%)
+augmentIncreasedDamagePercent = 5
+augmentPowerfulImpactPercent = 7
+augmentStrongImpactPercent = 10
 
 -- Prey system
 -- NOTE: preyRerollPricePerLevel: Price multiplier in gold coin for rerolling prey list.
@@ -212,6 +224,8 @@ wheelAtelierRevealGreaterCost = 6000000
 familiarTime = 30
 
 partyAutoShareExperience = true
+-- partyShareRangeMultiplier: the range of the party share experience, default 3/2 (1.5)
+partyShareRangeMultiplier = 1.5
 partyShareLootBoosts = false
 partyShareLootBoostsDimishingFactor = 0.7
 
@@ -224,9 +238,6 @@ tibiadromeConcoctionTickType = "online" -- "online" | "experience"
 onlyPremiumAccount = false
 
 -- Customs
--- NOTE: weatherRain = true, activates weather raining effects
--- NOTE: thunderEffect = true, activates thunder effects
--- NOTE: allConsoleLog = true, show all message logs
 -- NOTE: stashMoving = true, stow an container inside your stash
 -- NOTE: depotChest, the non-stackable items will be moved to the selected depot chest(I - XVIII).
 -- NOTE: autoBank = true, the dropped coins from monsters will be automatically deposited to your bank account.
@@ -239,9 +250,10 @@ onlyPremiumAccount = false
 -- NOTE: teleportPlayerToVocationRoom will enable oressa to teleport player to his/her room vocation
 -- NOTE: toggleReceiveReward = true, will enable players to choose one of reward exercise weapon by command !reward
 -- NOTE: randomMonsterSpawn = true, will enable monsters from the same spawn to be randomized between them, thus making a variable hunt
-weatherRain = false
-thunderEffect = false
-allConsoleLog = false
+-- NOTE: enablePlayerPutItemInAmmoSlot = true, will enable players to put any items on ammo slot, more used in custom shopping system
+-- NOTE: startStreakLevel will make a reward streak level for new players who never logged in
+-- NOTE: if showLootsInBestiary is true, will cause all loots to be shown in the bestiary even if the player has not reached the required number of kills
+-- NOTE: minTownIdToBankTransfer blocks towns less than defined from receiving money transfers
 stashMoving = false
 depotChest = 4
 autoLoot = false
@@ -257,6 +269,10 @@ toggleReceiveReward = false
 randomMonsterSpawn = false
 lootPouchMaxLimit = 2000
 storeInboxMaxLimit = 2000
+enablePlayerPutItemInAmmoSlot = false
+startStreakLevel = 0
+showLootsInBestiary = false
+minTownIdToBankTransfer = 3
 
 -- Teleport summon
 -- Set to true will never remove the summon
@@ -281,9 +297,11 @@ maxAllowedOnADummy = 1
 
 -- Save interval per time
 -- NOTE: toggleSaveInterval: true = enable the save interval, false = disable the save interval
+-- NOTE: toggleSaveAsync = true, will enable save async (experimental), not recommended for use in production
 -- NOTE: saveIntervalType: "minute", "second" or "hour"
 -- NOTE: toggleSaveIntervalCleanMap: true = enable the clean map, false = disable the clean map
 -- NOTE: saveIntervalTime: time based on what was set in "saveIntervalType"
+toggleSaveAsync = false
 toggleSaveInterval = true
 saveIntervalType = "hour"
 toggleSaveIntervalCleanMap = true
@@ -359,7 +377,10 @@ partyListMaxDistance = 30
 toggleMapCustom = true
 
 -- Market
+-- NOTE: marketRefreshPricesInterval (in minutes, minimum is 1 minute)
+-- NOTE: set it to 0 for disable, is the time in which the task will run updating the prices of the items that will be sent to the client
 marketOfferDuration = 30 * 24 * 60 * 60
+marketRefreshPricesInterval = 30
 premiumToCreateMarketOffer = true
 checkExpiredMarketOffersEachMinutes = 60
 maxMarketOffersAtATimePerPlayer = 100
@@ -391,7 +412,6 @@ resetSessionsOnStartup = false
 -- Misc.
 -- NOTE: experienceDisplayRates: set to false to ignore exp rate or true to include exp rate
 -- NOTE: disableLegacyRaids: set to true to disable legacy XML raids
--- NOTE: combatChainDelay: set to minimum 50 miliseconds
 allowChangeOutfit = true
 toggleMountInProtectionZone = false
 freePremium = false
@@ -419,10 +439,18 @@ multiplierSpeedOnFist = 5
 maxSpeedOnFist = 500
 disableLegacyRaids = false
 disableMonsterArmor = false
-combatChainDelay = 50
 minElementalResistance = -200
 maxElementalResistance = 200
 maxDamageReflection = 200
+
+-- Chain system
+-- NOTE: combatChainDelay: set to minimum 50 miliseconds
+toggleChainSystem = false
+combatChainDelay = 50
+combatChainTargets = 5
+combatChainSkillFormulaAxe = 0.9
+combatChainSkillFormulaClub = 0.7
+combatChainSkillFormulaSword = 1.1
 
 -- Global server Save
 -- NOTE: globalServerSaveNotifyDuration in minutes
@@ -483,6 +511,7 @@ bossDefaultTimeToFightAgain = 20 * 60 * 60 -- 20 hours
 bossDefaultTimeToDefeat = 20 * 60 -- 20 minutes
 
 -- Monsters
+defaultRespawnTime = 60
 deSpawnRange = 2
 deSpawnRadius = 50
 

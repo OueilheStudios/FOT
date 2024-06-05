@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -35,6 +35,9 @@ enum Attr_ReadValue {
 
 enum ReturnValue {
 	RETURNVALUE_NOERROR,
+	RETURNVALUE_NOTBOUGHTINSTORE,
+	RETURNVALUE_ITEMCANNOTBEMOVEDTHERE,
+	RETURNVALUE_ITEMCANNOTBEMOVEDPOUCH,
 	RETURNVALUE_NOTPOSSIBLE,
 	RETURNVALUE_NOTENOUGHROOM,
 	RETURNVALUE_PLAYERISPZLOCKED,
@@ -265,6 +268,17 @@ enum ImbuementTypes_t : int64_t {
 	IMBUEMENT_SKILLBOOST_DISTANCE = 15,
 	IMBUEMENT_SKILLBOOST_MAGIC_LEVEL = 16,
 	IMBUEMENT_INCREASE_CAPACITY = 17
+};
+
+enum class Augment_t : uint8_t {
+	None,
+	PowerfulImpact,
+	StrongImpact,
+	IncreasedDamage,
+	Cooldown,
+	CriticalExtraDamage,
+	LifeLeech,
+	ManaLeech
 };
 
 enum class ContainerCategory_t : uint8_t {
@@ -602,9 +616,20 @@ enum ItemParseAttributes_t {
 	ITEM_PARSE_REFLECTDAMAGE,
 	ITEM_PARSE_PRIMARYTYPE,
 	ITEM_PARSE_USEDBYGUESTS,
+	ITEM_PARSE_SCRIPT,
+	ITEM_PARSE_AUGMENT,
 };
 
 struct ImbuementInfo {
 	Imbuement* imbuement;
 	uint32_t duration = 0;
+};
+
+struct AugmentInfo {
+	AugmentInfo(std::string spellName, Augment_t type, int32_t value) :
+		spellName(std::move(spellName)), type(type), value(value) { }
+
+	std::string spellName;
+	Augment_t type;
+	int32_t value;
 };

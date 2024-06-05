@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -400,7 +400,7 @@ int NpcFunctions::luaNpcOpenShopWindowTable(lua_State* L) {
 		if (itemName.empty()) {
 			itemName = Item::items[itemId].name;
 		}
-		items.emplace_back(itemId, subType, buyPrice, sellPrice, storageKey, storageValue, itemName);
+		items.emplace_back(itemId, itemName, subType, buyPrice, sellPrice, storageKey, storageValue);
 		lua_pop(L, 8);
 	}
 	lua_pop(L, 3);

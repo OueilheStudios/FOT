@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -105,9 +105,10 @@ enum class WheelOnThink_t : uint8_t {
 	FOCUS_MASTERY = 4,
 	GIFT_OF_LIFE = 5,
 	DIVINE_EMPOWERMENT = 6,
-	AVATAR = 7,
+	AVATAR_SPELL = 7,
+	AVATAR_FORGE = 8,
 
-	TOTAL_COUNT = 8
+	TOTAL_COUNT = 9
 };
 
 enum class WheelStat_t : uint8_t {

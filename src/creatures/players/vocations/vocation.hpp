@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -179,16 +179,17 @@ public:
 	}
 
 	bool loadFromXml();
+	bool reload();
 
-	Vocation* getVocation(uint16_t id);
-	const std::map<uint16_t, Vocation> &getVocations() const {
+	std::shared_ptr<Vocation> getVocation(uint16_t id);
+	const std::map<uint16_t, std::shared_ptr<Vocation>> &getVocations() const {
 		return vocationsMap;
 	}
 	uint16_t getVocationId(const std::string &name) const;
 	uint16_t getPromotedVocation(uint16_t vocationId) const;
 
 private:
-	std::map<uint16_t, Vocation> vocationsMap;
+	std::map<uint16_t, std::shared_ptr<Vocation>> vocationsMap;
 };
 
 constexpr auto g_vocations = Vocations::getInstance;

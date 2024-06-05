@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -63,8 +63,8 @@ public:
 	}
 
 	void clear();
-	bool registerInstantLuaEvent(const std::shared_ptr<InstantSpell> instant);
-	bool registerRuneLuaEvent(const std::shared_ptr<RuneSpell> rune);
+	bool registerInstantLuaEvent(std::shared_ptr<InstantSpell> instant);
+	bool registerRuneLuaEvent(std::shared_ptr<RuneSpell> rune);
 
 private:
 	std::map<uint16_t, std::shared_ptr<RuneSpell>> runes;
@@ -92,7 +92,7 @@ public:
 class CombatSpell final : public Script, public BaseSpell, public std::enable_shared_from_this<CombatSpell> {
 public:
 	// Constructor
-	CombatSpell(const std::shared_ptr<Combat> newCombat, bool newNeedTarget, bool newNeedDirection);
+	CombatSpell(std::shared_ptr<Combat> newCombat, bool newNeedTarget, bool newNeedDirection);
 
 	// The copy constructor and the assignment operator have been deleted to prevent accidental copying.
 	CombatSpell(const CombatSpell &) = delete;
@@ -191,8 +191,14 @@ public:
 	[[nodiscard]] const VocSpellMap &getVocMap() const {
 		return vocSpellMap;
 	}
-	void addVocMap(uint16_t n, bool b) {
-		vocSpellMap[n] = b;
+	void addVocMap(uint16_t vocationId, bool b) {
+		if (vocationId == 0XFFFF) {
+			g_logger().error("Vocation overflow for spell: {}", getName());
+			return;
+		}
+
+		g_logger().trace("Adding spell: {} to voc id: {}", getName(), vocationId);
+		vocSpellMap[vocationId] = b;
 	}
 
 	SpellGroup_t getGroup() {
@@ -338,6 +344,9 @@ public:
 	void setSeparator(const std::string_view &newSeparator) {
 		m_separator = newSeparator.data();
 	}
+
+	void getCombatDataAugment(std::shared_ptr<Player> player, CombatDamage &damage);
+	int32_t calculateAugmentSpellCooldownReduction(std::shared_ptr<Player> player) const;
 
 protected:
 	void applyCooldownConditions(std::shared_ptr<Player> player) const;

@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -112,24 +112,15 @@ enum Supply_Stash_Actions_t : uint8_t {
 	SUPPLY_STASH_ACTION_WITHDRAW = 3
 };
 
-// Structs
-struct HighscoreCategory {
-	HighscoreCategory(const char* name, uint8_t id) :
-		name(name),
-		id(id) { }
-
-	const char* name;
-	uint8_t id;
-};
-
 struct HighscoreCharacter {
-	HighscoreCharacter(std::string name, uint64_t points, uint32_t id, uint32_t rank, uint16_t level, uint8_t vocation) :
+	HighscoreCharacter(std::string name, uint64_t points, uint32_t id, uint32_t rank, uint16_t level, uint8_t vocation, std::string loyaltyTitle) :
 		name(std::move(name)),
 		points(points),
 		id(id),
 		rank(rank),
 		level(level),
-		vocation(vocation) { }
+		vocation(vocation),
+		loyaltyTitle(std::move(loyaltyTitle)) { }
 
 	std::string name;
 	uint64_t points;
@@ -137,4 +128,5 @@ struct HighscoreCharacter {
 	uint32_t rank;
 	uint16_t level;
 	uint8_t vocation;
+	std::string loyaltyTitle;
 };

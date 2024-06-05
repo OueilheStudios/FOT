@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -105,11 +105,9 @@ CreatureEvent::CreatureEvent(LuaScriptInterface* interface) :
 	Script(interface) { }
 
 void CreatureEvents::removeInvalidEvents() {
-	for (auto it = creatureEvents.begin(); it != creatureEvents.end(); ++it) {
-		if (it->second->getScriptId() == 0) {
-			creatureEvents.erase(it->second->getName());
-		}
-	}
+	std::erase_if(creatureEvents, [](const auto &pair) {
+		return pair.second->getScriptId() == 0;
+	});
 }
 
 std::string CreatureEvent::getScriptTypeName() const {

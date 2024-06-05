@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -205,7 +205,6 @@ private:
 	 * indicating that the player can increase points but cannot decrease the ID.
 	 */
 	uint8_t getOptions(uint32_t ownerId) const;
-	uint8_t getPlayerVocationEnum() const;
 
 	std::shared_ptr<KV> gemsKV() const;
 
@@ -453,6 +452,8 @@ public:
 				return 0;
 		}
 	}
+
+	WheelGemBasicModifier_t selectBasicModifier2(WheelGemBasicModifier_t modifier1) const;
 
 private:
 	friend class Player;

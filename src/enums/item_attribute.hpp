@@ -1,6 +1,6 @@
 /**
  * Canary - A free and open-source MMORPG server emulator
- * Copyright (©) 2019-2022 OpenTibiaBR <opentibiabr@outlook.com>
+ * Copyright (©) 2019-2024 OpenTibiaBR <opentibiabr@outlook.com>
  * Repository: https://github.com/opentibiabr/canary
  * License: https://github.com/opentibiabr/canary/blob/main/LICENSE
  * Contributors: https://github.com/opentibiabr/canary/graphs/contributors
@@ -46,6 +46,7 @@ enum ItemAttribute_t : uint64_t {
 	LOOTMESSAGE_SUFFIX = 33,
 	STORE_INBOX_CATEGORY = 34,
 	OBTAINCONTAINER = 35,
+	AUGMENTS = 36,
 };
 
 enum ItemDecayState_t : uint8_t {
